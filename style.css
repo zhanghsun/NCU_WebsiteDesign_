@@ -1,110 +1,189 @@
-body{
-    margin:0;
-    font-family:Arial;
-    background:#2e5b2e;
-    color:white;
+/* --- 基礎設定 --- */
+* {
+    box-sizing: border-box; /* 確保 padding 不會撐開寬度導致破版 */
 }
 
-.header{
-    background:#1f3f2b;
-    padding:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+body {
+    margin: 0;
+    font-family: 'Microsoft JhengHei', Arial, sans-serif;
+    background-color: #2e5b2e;
+    color: white;
+    overflow-x: hidden; /* 防止側邊欄隱藏時出現水平捲軸 */
 }
 
-.nav{
-    display:flex;
+/* --- Header & 導覽列 --- */
+.header {
+    background: #1f3f2b;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.nav a{
-    flex:1;
-    padding:15px;
-    text-align:center;
-    background:#6e9f6e;
-    color:white;
-    text-decoration:none;
+.header-title { font-size: 28px; font-weight: bold; }
+.header-sub { font-size: 14px; opacity: 0.8; }
+
+.nav { display: flex; background: #6e9f6e; }
+.nav a {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.nav a:hover { background: #4e7f4e; }
+
+/* --- 主版面佈局 --- */
+.container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
 }
 
-.container{
-    display:flex;
-    padding:20px;
+/* 左側主圖區 */
+.left { flex: 2; position: relative; }
+.left img { 
+    width: 100%; 
+    border-radius: 15px; 
+    opacity: 0.9; 
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
 }
 
-.left{
-    flex:2;
-    position:relative;
+.text-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* 增強文字在照片上的易讀性 */
 }
 
-.left img{
-    width:100%;
+/* 右側資訊欄 */
+.right { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+.map-box {
+    background: #5c7f5c;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.map-box:hover { background: #6e9f6e; transform: translateY(-5px); }
+.map-box img { width: 85%; border-radius: 10px; margin-top: 10px; }
+
+.box { padding: 20px; border-radius: 20px; transition: 0.3s; }
+.box:hover { transform: scale(1.02); }
+.animal { background: #3c7a7a; }
+.plant { background: #7a6a3c; }
+.box h3 { margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; }
+
+/* --- 地圖彈窗 (Modal) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px); /* 背景模糊感 */
 }
 
-.overlay{
-    position:absolute;
-    bottom:20px;
-    left:20px;
-    font-size:24px;
+.map-wrapper {
+    position: relative;
+    margin: 5vh auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 15px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.6);
+    background: #fff; /* 地圖底色 */
 }
 
-.right{
-    flex:1;
-    padding:20px;
+.map-wrapper img.main-map { 
+    width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+    border: 4px solid #1f3f2b; 
+    display: block;
 }
 
-.card{
-    background:#3c7a7a;
-    padding:15px;
-    margin-bottom:15px;
-    border-radius:10px;
+.close {
+    position: absolute;
+    top: -40px; right: 0;
+    color: white; font-size: 35px; cursor: pointer;
 }
 
-/* 地圖 */
-.map{
-    position:relative;
+/* --- 地圖互動點位 (Spots) --- */
+.spot {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 5;
+    /* 核心修正：讓圓心對準你設定的百分比座標 */
+    transform: translate(-50%, -50%); 
+    transition: 0.3s ease;
+    animation: breathe 2.5s infinite ease-in-out;
 }
 
-.map img{
-    width:100%;
+.spot img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
-.point{
-    position:absolute;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    overflow:hidden;
-    border:3px solid white;
-    cursor:pointer;
-
-    z-index:10; 
+.spot:hover { 
+    transform: translate(-50%, -50%) scale(1.3); 
+    z-index: 10; 
+    animation-play-state: paused; 
 }
 
-.point img{
-    width:100%;
-    height:100%;
+@keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px rgba(255,255,255,0.6); }
 }
 
-/* 側邊欄 */
-.panel{
-    position:fixed;
-    right:-400px;
-    top:0;
-    width:400px;
-    height:100%;
-    background:#1f3f2b;
-    padding:20px;
-    transition:0.4s;
+/* --- 側邊資訊面板 (Slide-in Info Box) --- */
+.info-box {
+    position: fixed;
+    right: -420px; /* 預設在螢幕外 */
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(31, 63, 43, 0.95);
+    color: white;
+    padding: 40px 30px;
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
 }
 
-.panel.show{
-    right:0;
+/* 當有 .show 這個 class 時滑入 */
+.info-box.show {
+    right: 0;
 }
 
-.panel img{
-    width:100%;
+.info-box h2 { color: #8fdf8f; font-size: 28px; margin-bottom: 20px; }
+.info-box p { line-height: 1.8; font-size: 16px; margin-bottom: 30px; }
+.info-box button {
+    background: #6e9f6e; color: white; border: none;
+    padding: 12px 30px; border-radius: 30px; cursor: pointer;
+    font-weight: bold; width: 100%; transition: 0.3s;
 }
+.info-box button:hover { background: #8fdf8f; color: #1f3f2b; }
 
-.close{
-    cursor:pointer;
+/* 響應式微調：手機版 */
+@media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .info-box { width: 100%; right: -100%; }
 }
