@@ -116,12 +116,12 @@
         /* --- Interactive Spots --- */
         .spot {
             position: absolute;
-            width: 55px; /* 調整圓圈大小以匹配地圖細節 */
-            height: 55px;
+            width: 50px; /* 調整圓圈大小以匹配地圖細節 */
+            height: 50px;
             cursor: pointer;
             transition: 0.3s;
-            animation:  popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards,
-                        unifiedBounce 1.8s infinite ease-in-out;
+            transform: translate(-50%, -50%);
+            animation: breathe 2.5s infinite ease-in-out;
         }
         .spot img {
             width: 100%; height: 100%;
@@ -141,20 +141,9 @@
         .spot:hover { transform: translate(-50%, -50%) scale(1.3) translateY(-3px); z-index: 10; animation-play-state: paused; }
         .spot:hover img { border-color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
 
-        /* 統一的跳動與縮放動畫 */
-        @keyframes unifiedBounce {
-            0%, 100% { 
-                transform: translate(-50%, -50%) scale(1) translateY(0); 
-            }
-            50% { 
-                /* 跳動大小與縮放大小同時進行，節奏與整體感契合 */
-                transform: translate(-50%, -50%) scale(1.1) translateY(-20px); 
-            }
-        }
-
-        @keyframes popIn {
-            from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 5px rgba(255,255,255,0.4); }
+            50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 20px rgba(255,255,255,0.7); }
         }
 
         /* --- Info Box (The Description) --- */
@@ -181,64 +170,6 @@
             transition: 0.2s;
         }
         .info-box button:hover { background: #4e7f4e; transform: translateY(-2px); }
-            /* 讓大圖背景有輕微的縮放位移感 (Ken Burns Effect) */
-        .left { 
-            flex: 2; 
-            position: relative; 
-            overflow: hidden; 
-            border-radius: 10px; 
-        }
-        .left img { 
-            width: 100%; 
-            border-radius: 10px; 
-            opacity: 0.9; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-            animation: imageZoom 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes imageZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
-        /* 讓右側的動物/植物方框有進場動畫 */
-        .box { 
-            padding: 20px; 
-            border-radius: 20px; 
-            transition: 0.3s; 
-            animation: slideIn 0.8s ease-out backwards;
-        }
-        .animal { animation-delay: 0.2s; }
-        .plant { animation-delay: 0.4s; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* 修正資訊視窗的顯示動畫 */
-        .info-box {
-            display: none; /* 預設隱藏 */
-            opacity: 0;
-            transform: translate(-50%, -40%); /* 初始位置稍微偏下 */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .info-box.show {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -50%); /* 回到正中 */
-        }    
-
-        /* 讓地圖點位進場時更有彈性 */
-        .spot {
-            animation: breathe 2.5s infinite ease-in-out, popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
-        }
-
-        @keyframes popIn {
-            from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
     </style>
 </head>
 
@@ -356,24 +287,11 @@
         function showInfo(name, text) {
             document.getElementById("infoTitle").innerText = name;
             document.getElementById("infoText").innerText = text;
-            
-            // 1. 先顯示元素
-            infoBox.style.display = "block";
-            // 2. 稍微延遲後加入 active class 觸發 CSS transition 動畫
-            setTimeout(() => {
-                infoBox.classList.add("active");
-            }, 10);
+            infoBox.classList.add("show");
         }
 
         function closeInfo() {
-            // 1. 先移除 active class 讓它縮回去/變透明
-            infoBox.classList.remove("active");
-            // 2. 等動畫播完 (0.4s) 再徹底隱藏 display
-            setTimeout(() => {
-                if(!infoBox.classList.contains("active")) {
-                    infoBox.style.display = "none";
-                }
-            }, 400);
+            infoBox.classList.remove("show");
         }
 
         window.onclick = function(event) {
