@@ -141,9 +141,20 @@
         .spot:hover { transform: translate(-50%, -50%) scale(1.3) translateY(-3px); z-index: 10; animation-play-state: paused; }
         .spot:hover img { border-color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
 
-        @keyframes breathe {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 5px rgba(255,255,255,0.4); }
-            50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 20px rgba(255,255,255,0.7); }
+        /* 統一的跳動與縮放動畫 */
+        @keyframes unifiedBounce {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1) translateY(0); 
+            }
+            50% { 
+                /* 跳動大小與縮放大小同時進行，節奏與整體感契合 */
+                transform: translate(-50%, -50%) scale(1.1) translateY(-12px); 
+            }
+        }
+
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
         /* --- Info Box (The Description) --- */
