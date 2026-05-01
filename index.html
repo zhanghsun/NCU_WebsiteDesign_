@@ -93,6 +93,8 @@
             max-width: 900px;
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            background: #eee;
+            cursor: crosshair; /* 提示使用者可以點擊 */
         }
         .map-wrapper img.main-map { 
             width: 100%; 
@@ -102,6 +104,7 @@
             display: block; /* 確保圖片下方沒有多餘間隙 */
             border: 3px solid #6e9f6e; 
             border-radius: 10px;
+            pointer-events: none; /* 讓點擊事件直接傳給父容器 */
         }
         /* Canvas 用於繪製路線 */
         #routeCanvas {
@@ -163,7 +166,7 @@
             border-radius: 50% 50% 50% 0;
             transform: translate(-50%, -100%) rotate(-45deg);
             z-index: 20;
-            cursor: move;
+            display: none; /* 初始隱藏 */
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             /* 初始狀態稍微淡出，提示使用者尚未設定 */
@@ -272,10 +275,13 @@
 </div>
 
 <div id="mapModal" class="modal">
-    <div class="map-wrapper">
+    <div class="map-wrapper" id="mapWrapper" onclick="handleMapClick(event)">
     <span class="close" onclick="closeMap()">&times;</span>
-    <img class="main-map" src="ncu_ecology_map.png" alt="NCU Ecology Map">
+    <div id="tipBox" class="location-tip">👉 請點擊地圖任何位置設定「您的位置」</div>
+    <img class="main-map" src="ncu_ecology_map.png" alt="NCU Ecology Map" onerror="this.src='https://via.placeholder.com/900x600/556b2f/ffffff?text=NCU+Ecology+Map'">
+    <canvas id="routeCanvas"></canvas>
 
+    <div id="userMarker" class="user-location"></div>
     <div class="spot" style="top: 28.6%; left: 60.3%;" onclick="showInfo('赤腹松鼠', '中大最常見的居民，喜歡在大草坪和宿舍區穿梭自如。')">
         <img src="squirrel_avatar.png" alt="松鼠">
     </div>
@@ -361,39 +367,42 @@
     
         // 地圖點擊處理
         function handleMapClick(event) {
-            // 如果點到生物點位，交給生物點位的 onclick 處理，不在此處移動 Marker
-            if (event.target.closest('.spot')) return;
-    
-            const rect = mapWrapper.getBoundingClientRect();
-            const x = ((event.clientX - rect.left) / rect.width) * 100;
-            const y = ((event.clientY - rect.top) / rect.height) * 100;
-    
-            // 更新位置
-            userMarker.style.left = x + "%";
-            userMarker.style.top = y + "%";
-            
-            // 標記為已設定
-            if (!isLocationSet) {
-                isLocationSet = true;
-                userMarker.classList.add('active');
-                tipBox.innerText = "✅ 位置已設定！現在點擊點位可規劃路線。";
-                setTimeout(() => { tipBox.style.opacity = "0"; }, 2000);
-            }
-    
-            clearRoute(); // 移動後清除舊線
+        // 取得相對於 map-wrapper 的座標
+        const rect = mapWrapper.getBoundingClientRect();
+        const xPercent = ((event.clientX - rect.left) / rect.width) * 100;
+        const yPercent = ((event.clientY - rect.top) / rect.height) * 100;
+
+        // 檢查是否點在邊界內
+        if (xPercent < 0 || xPercent > 100 || yPercent < 0 || yPercent > 100) return;
+
+        // 更新 Marker 位置
+        userMarker.style.left = xPercent + "%";
+        userMarker.style.top = yPercent + "%";
+        
+        // 第一次點擊後啟動 Active 狀態
+        if (!isLocationSet) {
+            isLocationSet = true;
+            userMarker.classList.add('active');
+            tipBox.innerText = "✅ 位置已更新！再次點擊點位可看路線。";
+            setTimeout(() => { tipBox.style.opacity = "0"; }, 3000);
+        }
+
+        clearRoute();
         }
     
         // 點位互動邏輯
-        function spotInteraction(element, name, text) {
+        function spotInteraction(event, element, name, text) {
+            // 阻止事件冒泡到地圖點擊事件上 (handleMapClick)
+            event.stopPropagation();
+    
             if (!isLocationSet) {
-                // 情況 A：尚未設定位置 -> 只跳介紹
+                // 尚未設定位置 -> 只跳介紹
                 routeNotice.style.display = "none";
                 showInfo(name, text);
-                // 提示一下使用者要設定位置
                 tipBox.style.opacity = "1";
-                tipBox.innerText = "💡 提示：設定「目前位置」後可顯示路線！";
+                tipBox.innerText = "💡 提示：設定位置後點擊即可規劃路線！";
             } else {
-                // 情況 B：已設定位置 -> 跳介紹 + 畫線
+                // 已設定位置 -> 跳介紹 + 畫線
                 routeNotice.style.display = "block";
                 showInfo(name, text);
                 drawRoute(element);
@@ -402,19 +411,32 @@
     
         function drawRoute(targetEl) {
             resizeCanvas();
-            const userX = parseFloat(userMarker.style.left) / 100 * routeCanvas.width;
-            const userY = parseFloat(userMarker.style.top) / 100 * routeCanvas.height;
-            const targetX = parseFloat(targetEl.style.left) / 100 * routeCanvas.width;
-            const targetY = parseFloat(targetEl.style.top) / 100 * routeCanvas.height;
+            
+            // 使用百分比計算實際像素位置
+            const userX = (parseFloat(userMarker.style.left) / 100) * routeCanvas.width;
+            const userY = (parseFloat(userMarker.style.top) / 100) * routeCanvas.height;
+            
+            const targetX = (parseFloat(targetEl.style.left) / 100) * routeCanvas.width;
+            const targetY = (parseFloat(targetEl.style.top) / 100) * routeCanvas.height;
     
             ctx.clearRect(0, 0, routeCanvas.width, routeCanvas.height);
+            
+            // 繪製路徑線段
             ctx.beginPath();
-            ctx.setLineDash([8, 4]);
+            ctx.setLineDash([8, 6]); // 虛線風格
             ctx.moveTo(userX, userY);
             ctx.lineTo(targetX, targetY);
-            ctx.strokeStyle = "#ff5722"; // 使用醒目的橘色與 Marker 呼應
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#ff5722";
+            ctx.lineWidth = 4;
+            ctx.lineCap = "round";
             ctx.stroke();
+    
+            // 畫一個小圓點在目標點
+            ctx.beginPath();
+            ctx.setLineDash([]);
+            ctx.arc(targetX, targetY, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#ff5722";
+            ctx.fill();
         }
     
         function clearRoute() {
