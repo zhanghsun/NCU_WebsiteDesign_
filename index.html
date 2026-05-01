@@ -108,7 +108,7 @@
             z-index: 1000;
         }
 
-        /* --- Interactive Spots (保留你原本的位置) --- */
+        /* --- Interactive Spots (完全保留你原本的位置) --- */
         .spot {
             position: absolute;
             width: 55px !important;
@@ -145,8 +145,24 @@
 
         .panel-content { padding: 40px 30px; }
         .panel-header { border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 20px; margin-bottom: 20px; }
+        
+        /* 標題與頭像的容器 */
+        .title-with-avatar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 5px;
+        }
         .panel-header h2 { margin: 0; color: #8fdf8f; font-size: 28px; }
-        .scientific-name { font-style: italic; color: #ffd700; font-size: 14px; margin-top: 5px; }
+        .panel-header img.header-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #8fdf8f;
+            object-fit: cover;
+        }
+
+        .scientific-name { font-style: italic; color: #ffd700; font-size: 14px; }
 
         .panel-section { margin-bottom: 25px; }
         .panel-section h3 { border-left: 4px solid #8fdf8f; padding-left: 10px; color: #8fdf8f; margin-bottom: 10px; }
@@ -203,12 +219,13 @@
     </div>
 </div>
 
+<!-- Map Modal -->
 <div id="mapModal" class="modal">
     <div class="map-wrapper">
         <span class="close" onclick="closeMap()">&times;</span>
         <img class="main-map" src="ncu_ecology_map.png" alt="NCU Ecology Map">
 
-        <!-- 點位使用原本座標 -->
+        <!-- 點位 (使用原本座標) -->
         <div class="spot" style="top: 28.6%; left: 60.3%;" onclick="displayInfo('squirrel')">
             <img src="animal1.jpg">
         </div>
@@ -242,12 +259,15 @@
     </div>
 </div>
 
-<!-- Side Panel -->
+<!-- Side Panel (修改後的結構) -->
 <div id="sidePanel" class="side-panel">
     <button class="close-panel-btn" onclick="closePanel()">&times;</button>
     <div class="panel-content">
         <div class="panel-header">
-            <h2 id="panelTitle">中文名</h2>
+            <div class="title-with-avatar">
+                <h2 id="panelTitle">中文名</h2>
+                <img id="panelAvatar" class="header-avatar" src="" alt="頭像">
+            </div>
             <div id="panelScientific" class="scientific-name">物種學名</div>
         </div>
         <div class="panel-body">
@@ -273,9 +293,11 @@
 
 <script>
     // --- 動植物資料中心 ---
+    // 我幫你多加了 'avatar' 欄位，填入對應的圖片檔名
     const speciesData = {
         'squirrel': {
             name: '赤腹松鼠',
+            avatar: 'animal1.jpg',
             scientific: 'Callosciurus erythraeus',
             classification: '哺乳綱 Mammalia／囓齒目 Rodentia／松鼠科 Sciuridae／麗松鼠屬 Callosciurus',
             dist: `<ul>
@@ -298,6 +320,7 @@
         },
         'magpie': {
             name: '台灣藍鵲',
+            avatar: 'animal2.jpg',
             scientific: 'Urocissa caerulea',
             classification: '鳥綱 Aves／雀形目 Passeriformes／鴉科 Corvidae',
             dist: `<ul>
@@ -319,6 +342,7 @@
         },
         'lizard': {
             name: '斯文豪氏攀蜥',
+            avatar: 'animal4.jpg',
             scientific: 'Diploderma swinhonis',
             classification: '爬行綱 Reptilia／有鱗目 Squamata／飛蜥科 Agamidae',
             dist: `<ul>
@@ -340,6 +364,7 @@
         },
         'frog': {
             name: '澤蛙',
+            avatar: 'animal3.jpg',
             scientific: 'Fejervarya limnocharis',
             classification: '兩棲綱 Amphibia／無尾目 Anura／叉舌蛙科 Dicroglossidae',
             dist: `<ul>
@@ -361,6 +386,7 @@
         },
         'dragonfly': {
             name: '霜白蜻蜓',
+            avatar: 'animal5.jpg',
             scientific: 'Orthetrum pruinosum',
             classification: '昆蟲綱 Insecta／蜻蜓目 Odonata／蜻蜓科 Libellulidae',
             dist: `<ul>
@@ -382,6 +408,7 @@
         },
         'cedar': {
             name: '台灣肖楠',
+            avatar: 'plant1.jpg',
             scientific: 'Calocedrus formosana',
             classification: '松柏綱 Coniferopsida／松柏目 Pinales／柏科 Cupressaceae',
             dist: `<ul>
@@ -403,6 +430,7 @@
         },
         'juniper': {
             name: '龍柏',
+            avatar: 'plant2.jpg',
             scientific: "Juniperus chinensis 'Kaizuka'",
             classification: '松柏綱 Coniferopsida／松柏目 Pinales／柏科 Cupressaceae',
             dist: `<ul>
@@ -424,6 +452,7 @@
         },
         'paperbark': {
             name: '白千層',
+            avatar: 'plant3.jpg',
             scientific: 'Melaleuca leucadendra',
             classification: '木蘭綱 Magnoliopsida／桃金孃目 Myrtales／桃金孃科 Myrtaceae',
             dist: `<ul>
@@ -445,6 +474,7 @@
         },
         'acacia': {
             name: '相思樹',
+            avatar: 'plant4.jpg',
             scientific: 'Acacia confusa',
             classification: '木蘭綱 Magnoliopsida／豆目 Fabales／豆科 Fabaceae',
             dist: `<ul>
@@ -466,6 +496,7 @@
         },
         'cherry': {
             name: '櫻花',
+            avatar: 'plant5.jpg',
             scientific: 'Prunus spp.',
             classification: '木蘭綱 Magnoliopsida／薔薇目 Rosales／薔薇科 Rosaceae',
             dist: `<ul>
@@ -498,11 +529,13 @@
         closePanel();
     }
 
+    // 更新後的顯示邏輯，會順便抓取 avatar 圖片
     function displayInfo(key) {
         const data = speciesData[key];
         if (!data) return;
 
         document.getElementById("panelTitle").innerText = data.name;
+        document.getElementById("panelAvatar").src = data.avatar; // 設定圖片路徑
         document.getElementById("panelScientific").innerText = data.scientific;
         document.getElementById("panelClass").innerText = data.classification;
         document.getElementById("panelDist").innerHTML = data.dist;
