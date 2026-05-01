@@ -92,7 +92,6 @@
             width: 90%;
             max-width: 900px;
             border-radius: 10px;
-            overflow: hidden; /* 防止內容超出地圖範圍 */
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
         .map-wrapper img.main-map { 
@@ -116,8 +115,8 @@
         /* --- Interactive Spots --- */
         .spot {
             position: absolute;
-            width: 65px; /* 調整圓圈大小以匹配地圖細節 */
-            height: 65px;
+            width: 65px !important; /* 調整圓圈大小以匹配地圖細節 */
+            height: 65px !important;
             aspect-ratio: 1 / 1;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑過渡 */
@@ -130,6 +129,8 @@
             border: 2px solid #333; /* 暗色邊框，如截圖所示 */
             object-fit: cover;
             box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            background-color: white;
+            display: block;
         }
         
          
