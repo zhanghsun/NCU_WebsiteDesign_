@@ -34,8 +34,13 @@
             text-decoration: none;
             font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
         .nav a:hover { background: #4e7f4e; }
+        .nav a.active { background: #1f3f2b; }
+
+        .page { display: none; }
+        .page.active { display: block; }
 
         /* --- Main Layout --- */
         .container {
@@ -75,6 +80,37 @@
         .plant { background: #7a6a3c; }
         .box h3 { margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 5px; }
 
+        /* --- Join Form Styles --- */
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #1f3f2b;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        label { color: #8fdf8f; font-weight: bold; }
+        input, select, textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4e7f4e;
+            background: #2e5b2e;
+            color: white;
+            font-size: 16px;
+        }
+        .submit-btn {
+            background: #6e9f6e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+        
         /* --- Modal (The Map) --- */
         .modal {
             display: none;
@@ -220,6 +256,42 @@
     </div>
 </div>
 
+<!-- 參與我們畫面 (新分頁) -->
+<div id="join-page" class="page">
+    <div class="form-container">
+        <h2 style="color: #8fdf8f; text-align: center;">參與我們 & 意見回饋</h2>
+        <p style="text-align: center; opacity: 0.8; margin-bottom: 30px;">
+            如果您在校園發現了稀有物種，或有任何建議，請告訴我們。
+        </p>
+        
+        <form onsubmit="event.preventDefault(); alert('感謝您的提交！'); showPage('home');">
+            <div class="form-group">
+                <label>姓名</label>
+                <input type="text" required placeholder="您的姓名">
+            </div>
+            <div class="form-group">
+                <label>回饋類型</label>
+                <select>
+                    <option>生態觀察回報</option>
+                    <option>資訊勘誤</option>
+                    <option>其他建議</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>詳細內容</label>
+                <textarea rows="5" required placeholder="請輸入內容..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">送出回饋</button>
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="javascript:void(0)" onclick="showPage('home')" style="color: #8fdf8f;">取消並返回首頁</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 12px;">
+    &copy; 2024 國立中央大學 生態保育小組. All Rights Reserved.
+</footer>
 <div id="mapModal" class="modal">
     <div class="map-wrapper">
         <span class="close" onclick="closeMap()">&times;</span>
