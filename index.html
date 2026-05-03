@@ -81,6 +81,56 @@
         .plant { background: #7a6a3c; }
         .box h3 { margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 5px; }
 
+        /* --- Resource Center Styles --- */
+        .resource-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: #1a3625;
+        }
+        .role-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .role-btn {
+            background: #4e7f4e;
+            color: white;
+            border: 2px solid transparent;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .role-btn:hover { background: #6e9f6e; }
+        .role-btn.active {
+            background: #8fdf8f;
+            color: #1a3625;
+            border-color: white;
+        }
+        .resource-content {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8fdf8f;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .info-card.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* --- Join Form Styles --- */
         .form-container {
             max-width: 800px;
@@ -227,12 +277,11 @@
 <div class="nav">
     <a id="nav-home" onclick="showPage('home')" class="active">首頁<br>Home</a>
     <a href="javascript:void(0)" onclick="openMap()">中大生態地圖<br>NCU Ecology Map</a>
-    <a href="#">資源中心<br>Resources</a>
-    <!-- 修正：添加 onclick -->
+    <a id="nav-resources" onclick="showPage('resources')">資源中心<br>Resources</a>
     <a id="nav-join" onclick="showPage('join')">參與我們<br>Join Us</a>
 </div>
 
-<!-- 修正：將首頁內容包裝起來 -->
+<!-- 首頁內容 -->
 <div id="home-page" class="page active">
     <div class="container">
         <div class="left">
@@ -260,7 +309,73 @@
     </div>
 </div>
 
-<!-- 參與我們畫面 (保持原樣，確保被正確切換) -->
+<!-- 資源中心 -->
+<div id="resources-page" class="page">
+    <div class="resource-header">
+        <h1>資源中心</h1>
+        <p>請選擇您的身分，獲取專屬的校園生態資訊與資源：</p>
+        <div class="role-selector">
+            <button class="role-btn active" onclick="switchRole('student', this)">我是學生</button>
+            <button class="role-btn" onclick="switchRole('teacher', this)">我是教師</button>
+            <button class="role-btn" onclick="switchRole('admin', this)">我是行政人員</button>
+        </div>
+    </div>
+
+    <div class="resource-content">
+        <!-- 學生資源 -->
+        <div id="student-info" class="info-card active">
+            <h2 style="color: #8fdf8f;">學生專區：探索與學習</h2>
+            <div class="panel-section">
+                <h3>校園物種知識庫</h3>
+                <p>提供中大校園內 50+ 種常見動植物的圖鑑，包含習性、觀察地點與最佳觀察季節。</p>
+            </div>
+            <div class="panel-section">
+                <h3>生態社團參與</h3>
+                <p>了解校內相關服務學習、環境志工與生態保育社團的活動資訊。</p>
+            </div>
+            <div class="panel-section">
+                <h3>通識課程輔助資源</h3>
+                <p>針對「環境科學」、「自然科學導論」等通識課程，提供校園實地觀察指引手冊。</p>
+            </div>
+        </div>
+
+        <!-- 教師資源 -->
+        <div id="teacher-info" class="info-card">
+            <h2 style="color: #8fdf8f;">教師專區：教學資源整合</h2>
+            <div class="panel-section">
+                <h3>戶外教學場域指引</h3>
+                <p>提供校園內適合戶外授課的生態熱點（如：中大湖、松林區）之教學路徑規劃。</p>
+            </div>
+            <div class="panel-section">
+                <h3>生態資料庫 API</h3>
+                <p>開放校園長期的物種觀測數據，可用於數據分析、生物資訊學或環境統計課程教學。</p>
+            </div>
+            <div class="panel-section">
+                <h3>教案共享平台</h3>
+                <p>提供跨學科（通識、生命科學、地科）的校園生態教案範本與多媒體素材。</p>
+            </div>
+        </div>
+
+        <!-- 行政人員資源 -->
+        <div id="admin-info" class="info-card">
+            <h2 style="color: #8fdf8f;">行政專區：改善與管理建議</h2>
+            <div class="panel-section">
+                <h3>校園綠地改善方案</h3>
+                <p>建議校園植栽應優先選擇「原生種」，以提升生物多樣性並降低後續維護成本。</p>
+            </div>
+            <div class="panel-section">
+                <h3>永續發展指標 (SDGs)</h3>
+                <p>協助計算校園生態指標，作為校務發展委員會及世界大學排名（THE Impact Rankings）的報告參考數據。</p>
+            </div>
+            <div class="panel-section">
+                <h3>生態熱點維護預警</h3>
+                <p>提供敏感物種築巢期（如：台灣藍鵲）的校園工程迴避建議與警告告示規劃。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 參與我們 -->
 <div id="join-page" class="page">
     <div class="form-container">
         <h2 style="color: #8fdf8f; text-align: center;">參與我們 & 意見回饋</h2>
@@ -302,7 +417,7 @@
         <span class="close" onclick="closeMap()">&times;</span>
         <img class="main-map" src="ncu_ecology_map.png" alt="NCU Ecology Map">
 
-        <!-- 點位 (保留原樣) -->
+        <!-- 點位 -->
         <div class="spot" style="top: 28.6%; left: 60.3%;" onclick="displayInfo('squirrel')">
             <img src="animal1.jpg">
         </div>
@@ -368,20 +483,25 @@
 </div>
 
 <script>
-    // 修正：新增分頁切換函數
     function showPage(pageId) {
-        // 隱藏所有頁面
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        // 移除所有導覽選取狀態
         document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
         
-        // 顯示指定的頁面
         document.getElementById(pageId + '-page').classList.add('active');
-        // 設定選取的導覽按鈕顏色
         document.getElementById('nav-' + pageId).classList.add('active');
         
-        // 切換頁面後捲動到頂部
         window.scrollTo(0, 0);
+    }
+
+    // 身分資源切換邏輯
+    function switchRole(role, btn) {
+        // 更新按鈕樣式
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // 更新內容顯示
+        document.querySelectorAll('.info-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(role + '-info').classList.add('active');
     }
 
     const speciesData = {
