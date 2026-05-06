@@ -357,19 +357,14 @@
         <div class="role-selector">
             <button class="role-btn active" onclick="switchRole('student', this)">我是學生</button>
             <button class="role-btn" onclick="switchRole('teacher', this)">我是教師</button>
-            <button class="role-btn" onclick="switchRole('admin', this)">我是行政人員</button>
+            <button class="role-btn" onclick="switchRole('database', this)">校園物種知識庫</button>
         </div>
     </div>
 
     <div class="resource-content">
         <!-- 學生資源：改為三個功能按鈕 -->
         <div id="student-info" class="info-card active">
-            <div class="resource-grid">
-                <div class="action-button" onclick="alert('正在進入校園物種知識庫...')">
-                    <span style="font-size: 40px;">📖</span>
-                    <h3>校園物種知識庫</h3>
-                    <p>探索 50+ 種校園動植物圖鑑與習性</p>
-                </div>
+             
                 <div class="action-button" onclick="alert('正在查看社團活動資訊...')">
                     <span style="font-size: 40px;">🌱</span>
                     <h3>生態社團參與</h3>
@@ -377,7 +372,7 @@
                 </div>
                 <div class="action-button" onclick="alert('正在下載課程輔助指引...')">
                     <span style="font-size: 40px;">🔍</span>
-                    <h3>通識課程輔助</h3>
+                    <h3>通識課程輔助資源</h3>
                     <p>環境科學與自然導論實地觀察手冊</p>
                 </div>
             </div>
@@ -388,14 +383,10 @@
             <div class="resource-grid">
                 <div class="action-button" onclick="alert('載入戶外教學場域指引...')">
                     <span style="font-size: 40px;">🗺️</span>
-                    <h3>戶外教學指引</h3>
+                    <h3>戶外教學場域指引</h3>
                     <p>中大湖、松林區等生態熱點路徑規劃</p>
                 </div>
-                <div class="action-button" onclick="alert('連線至資料庫 API...')">
-                    <span style="font-size: 40px;">📊</span>
-                    <h3>生態資料庫 API</h3>
-                    <p>開放物種觀測數據，支援教學與研究</p>
-                </div>
+                 
                 <div class="action-button" onclick="alert('開啟教案共享平台...')">
                     <span style="font-size: 40px;">💡</span>
                     <h3>教案共享平台</h3>
@@ -404,8 +395,8 @@
             </div>
         </div>
 
-        <!-- 行政人員資源：改為三個功能按鈕 -->
-        <div id="admin-info" class="info-card">
+        <!-- 資料庫：改為三個功能按鈕 -->
+        <div id="database-info" class="info-card">
             <div class="resource-grid">
                 <div class="action-button" onclick="alert('查看綠地改善方案...')">
                     <span style="font-size: 40px;">🌳</span>
