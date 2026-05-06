@@ -459,7 +459,7 @@
             如果您在校園發現了稀有物種，或有任何建議，請告訴我們。
         </p>
         
-        <form onsubmit="event.preventDefault(); alert('感謝您的提交！'); showPage('home');">
+        <form onsubmit="submitJoinForm(event, this)">
             <div class="form-group">
                 <label>姓名</label>
                 <input type="text" required placeholder="您的姓名">
@@ -778,6 +778,13 @@
     function openMap() { mapModal.style.display = "block"; }
     function closeMap() { mapModal.style.display = "none"; closePanel(); }
 
+    function submitJoinForm(event, form) {
+        event.preventDefault();
+        alert('感謝您的提交！');
+        form.reset();
+        showPage('home');
+        window.scrollTo(0, 0);
+    }
     function showResource(title, text) {
         document.getElementById("resource-title").textContent = title;
         document.getElementById("resource-text").textContent = text;
