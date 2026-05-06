@@ -775,7 +775,9 @@
         document.getElementById("resource-text").textContent = text;
         document.getElementById("resourceModal").style.display = "block";
     }
-        
+    function closeResource() {
+        document.getElementById("resourceModal").style.display = "none";
+    }   
     function displayInfo(key) {
         const data = speciesData[key];
         if (!data) return;
