@@ -398,12 +398,12 @@
         <!-- 學生資源：改為三個功能按鈕 -->
         <div id="student-info" class="info-card active">
             <div class="resource-grid">
-                <div class="action-button" onclick="alert('正在查看社團活動資訊...')">
+                <div class="action-button" onclick="showResource('生態社團參與', '掌握環境志工與生態保育社團活動。')">
                     <span style="font-size: 40px;">🌱</span>
                     <h3>生態社團參與</h3>
                     <p>掌握環境志工與生態保育社團活動</p>
                 </div>
-                <div class="action-button" onclick="alert('正在下載課程輔助指引...')">
+                <div class="action-button" onclick="showResource('通識課程輔助資源', '提供環境科學與自然導論實地觀察手冊。')">
                     <span style="font-size: 40px;">🔍</span>
                     <h3>通識課程輔助資源</h3>
                     <p>環境科學與自然導論實地觀察手冊</p>
@@ -420,7 +420,7 @@
                     <p>中大湖、松林區等生態熱點路徑規劃</p>
                 </div>
                  
-                <div class="action-button" onclick="alert('開啟教案共享平台...')">
+                <div class="action-button" onclick="showResource('教案共享平台', '提供跨學科校園生態教案範本與教學素材。')">
                     <span style="font-size: 40px;">💡</span>
                     <h3>教案共享平台</h3>
                     <p>跨學科校園生態教案範本與素材</p>
@@ -431,17 +431,17 @@
         <!-- 資料庫：改為三個功能按鈕 -->
         <div id="database-info" class="info-card">
             <div class="resource-grid">
-                <div class="action-button" onclick="alert('查看綠地改善方案...')">
+                <div class="action-button" onclick="showResource('綠地改善方案', '提供原生種植栽選擇與生物多樣性提升建議。')">
                     <span style="font-size: 40px;">🌳</span>
                     <h3>綠地改善方案</h3>
                     <p>原生種植栽選擇與生物多樣性提升建議</p>
                 </div>
-                <div class="action-button" onclick="alert('讀取永續發展指標數據...')">
+                <div class="action-button" onclick="showResource('SDGs 永續指標', '提供校園生態數據計算與 THE 排名參考。')">
                     <span style="font-size: 40px;">🌍</span>
                     <h3>SDGs 永續指標</h3>
                     <p>校園生態數據計算與 THE 排名參考</p>
                 </div>
-                <div class="action-button" onclick="alert('顯示生態熱點預警系統...')">
+                <div class="action-button" onclick="showResource('維護預警系統', '提供育雛期工程迴避與生態告示規劃建議。')">
                     <span style="font-size: 40px;">⚠️</span>
                     <h3>維護預警系統</h3>
                     <p>育雛期工程迴避與生態告示規劃建議</p>
@@ -558,6 +558,13 @@
     </div>
 </div>
 
+<div id="resourceModal" class="resource-modal">
+     <div class="resource-modal-content">
+        <span class="resource-close" onclick="closeResource()">&times;</span>
+        <h2 id="resource-title">標題</h2>
+        <p id="resource-text">內容</p>
+    </div>
+</div>       
 <script>
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -796,12 +803,6 @@
 
     window.onclick = function(event) { if (event.target == mapModal) closeMap(); }
 </script>
-    <div id="resourceModal" class="resource-modal">
-        <div class="resource-modal-content">
-            <span class="resource-close" onclick="closeResource()">&times;</span>
-            <h2 id="resource-title">標題</h2>
-            <p id="resource-text">內容</p>
-        </div>
-    </div>
+    
 </body>
 </html>
