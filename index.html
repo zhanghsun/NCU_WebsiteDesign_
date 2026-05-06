@@ -321,12 +321,7 @@
     <a id="nav-join" onclick="showPage('join')">參與我們<br>Join Us</a>
 </div>
 
-<div id="resource-display" class="resource-display">
-    <h2 id="resource-title">請選擇一項資源</h2>
-    <p id="resource-text">
-        點擊上方卡片後，詳細內容會顯示在這裡。
-    </p>
-</div>
+
 
 <!-- 首頁內容 -->
 <div id="home-page" class="page active">
@@ -420,6 +415,12 @@
                     <p>育雛期工程迴避與生態告示規劃建議</p>
                 </div>
             </div>
+        </div>
+        <div id="resource-display" class="resource-display">
+            <h2 id="resource-title">請選擇一項資源</h2>
+            <p id="resource-text">
+                點擊上方卡片後，詳細內容會顯示在這裡。
+            </p>
         </div>
     </div>
 </div>
@@ -745,8 +746,9 @@
     function closeMap() { mapModal.style.display = "none"; closePanel(); }
 
     function showResource(title, text) {
-    document.getElementById("resource-title").textContent = title;
-    document.getElementById("resource-text").textContent = text;
+        document.getElementById("resource-title").textContent = title;
+        document.getElementById("resource-text").textContent = text;
+    }
         
     function displayInfo(key) {
         const data = speciesData[key];
