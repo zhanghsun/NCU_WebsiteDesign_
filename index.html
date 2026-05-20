@@ -778,8 +778,10 @@
     function openMap() { mapModal.style.display = "block"; }
     function closeMap() { mapModal.style.display = "none"; closePanel(); }
 
-    function submitJoinForm(event) {
+    async function submitJoinForm(event) {
         event.preventDefault();
+    
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwInvLl91kEhnSVnKlJhEiFvgGmzoI3hVWugHLU7kZFrQKbWb6hx6LP_Ezxjng41bLR/exec";
     
         const data = {
             name: document.getElementById("name").value,
@@ -787,13 +789,23 @@
             message: document.getElementById("message").value
         };
     
-        console.log(data);
+        try {
+            await fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(data)
+            });
     
-        alert("感謝您的回饋，我們已收到資料！");
-    
-        event.target.reset();
-    
-        showPage('home');
+            alert("感謝您的回饋，我們已收到資料！");
+            event.target.reset();
+            showPage("home");
+        } catch (error) {
+            alert("送出失敗，請稍後再試。");
+            console.error(error);
+        }
     }
     function showResource(title, text) {
         document.getElementById("resource-title").textContent = title;
