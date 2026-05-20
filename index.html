@@ -406,48 +406,79 @@
     <a id="nav-join" onclick="showPage('join')">參與我們<br>Join Us</a>
 </div>
 
+```html
 <div id="home-page" class="page active">
-    <div class="container">
-        <div class="left">
-            <img src="ncu.jpg" alt="NCU Campus">
-            <div class="text-overlay">
-                生活在中央大學，<br>但我們究竟對周遭的環境及其保育了解多少呢？
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-image-wrapper">
+            <img src="ncu.jpg" alt="NCU Campus" class="hero-image">
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <h1>
+                    生活在中央大學，<br>
+                    但我們究竟對周遭的環境及其保育了解多少呢？
+                </h1>
+
+                <button class="explore-btn" onclick="openMap()">
+                    探索校園生態地圖
+                </button>
             </div>
         </div>
+    </section>
 
-        <div class="right">
-            <div class="map-box" onclick="openMap()">
-                <h3>生態地圖 (點擊開啟)</h3>
-                <p>探索校園動植物分布</p>
+    <!-- Main Content -->
+    <div class="container new-layout">
+
+        <!-- Left Side -->
+        <div class="left-content">
+
+            <div class="map-box glass-card" onclick="openMap()">
+                <div class="card-header">
+                    <h3>生態地圖 (點擊開啟)</h3>
+                    <p>探索校園動植物分布</p>
+                </div>
+
                 <img src="map.png" alt="Map Preview">
             </div>
-            
-            <div class="lists-container">
-                <div class="box animal">
-                    <h3>動物</h3>
-                    <ul class="species-list">
-                        <li onclick="displayInfo('magpie')">台灣藍鵲</li>
-                        <li onclick="displayInfo('squirrel')">赤腹松鼠</li>
-                        <li onclick="displayInfo('lizard')">斯文豪氏攀蜥</li>
-                        <li onclick="displayInfo('frog')">澤蛙</li>
-                        <li onclick="displayInfo('dragonfly')">霜白蜻蜓</li>
-                    </ul>
-                </div>
 
-                <div class="box plant">
-                    <h3>植物</h3>
-                    <ul class="species-list">
-                        <li onclick="displayInfo('cedar')">台灣肖楠</li>
-                        <li onclick="displayInfo('juniper')">龍柏</li>
-                        <li onclick="displayInfo('paperbark')">白千層</li>
-                        <li onclick="displayInfo('acacia')">相思樹</li>
-                        <li onclick="displayInfo('cherry')">櫻花</li>
-                    </ul>
-                </div>
-            </div>
         </div>
+
+        <!-- Right Side -->
+        <div class="right-content">
+
+            <div class="box animal glass-card">
+                <h3>動物</h3>
+
+                <ul class="species-list">
+                    <li onclick="displayInfo('magpie')">台灣藍鵲</li>
+                    <li onclick="displayInfo('squirrel')">赤腹松鼠</li>
+                    <li onclick="displayInfo('lizard')">斯文豪氏攀蜥</li>
+                    <li onclick="displayInfo('frog')">澤蛙</li>
+                    <li onclick="displayInfo('dragonfly')">霜白蜻蜓</li>
+                </ul>
+            </div>
+
+            <div class="box plant glass-card">
+                <h3>植物</h3>
+
+                <ul class="species-list">
+                    <li onclick="displayInfo('cedar')">台灣肖楠</li>
+                    <li onclick="displayInfo('juniper')">龍柏</li>
+                    <li onclick="displayInfo('paperbark')">白千層</li>
+                    <li onclick="displayInfo('acacia')">相思樹</li>
+                    <li onclick="displayInfo('cherry')">櫻花</li>
+                </ul>
+            </div>
+
+        </div>
+
     </div>
+
 </div>
+```
 
 <div id="resources-page" class="page">
     <div class="resource-header">
