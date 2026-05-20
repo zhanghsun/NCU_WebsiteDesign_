@@ -228,6 +228,9 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
+        .form-container form p a {
+            cursor: pointer;
+        }
         .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
         label { color: #8fdf8f; font-weight: bold; }
         input, select, textarea {
@@ -324,9 +327,11 @@
             z-index: 5;
             transition: 0.3s;
         }
-        /* 保持原本的正方形外觀，不加圓角 */
+        
+        /* ✨ 修正：將地圖點位圖片單獨設回 border-radius: 50%，恢復成精緻的圓圈圈！ */
         .spot img {
             width: 100%; height: 100%;
+            border-radius: 50%;
             border: 2px solid #333;
             object-fit: cover;
             box-shadow: 0 2px 10px rgba(0,0,0,0.4);
@@ -360,6 +365,7 @@
         }
         .panel-header h2 { margin: 0; color: #8fdf8f; font-size: 28px; }
 
+        /* 👍 保留：側邊欄大標旁邊的圖片依然維持原本的正方形(帶微圓角)外觀 */
         .panel-header img.header-avatar {
             width: 80px;
             height: 80px;
@@ -850,7 +856,7 @@
                 body: data
             });
     
-            alert("感謝您的回饋，我們已收到資料！");
+            alert("感謝您的回饋，我們已收到資料！並且已成功同步至雲端試算表。");
             event.target.reset();
             showPage("home");
         } catch (error) {
@@ -859,6 +865,7 @@
         }
     }
     
+    // 資源中心 Modal 處理
     function showResource(title, text) {
         document.getElementById("resource-title").textContent = title;
         document.getElementById("resource-text").textContent = text;
@@ -867,6 +874,8 @@
     function closeResource() {
         document.getElementById("resourceModal").style.display = "none";
     }   
+    
+    // 生態側邊面板處理
     function displayInfo(key) {
         const data = speciesData[key];
         if (!data) return;
@@ -880,6 +889,7 @@
         sidePanel.classList.add("show");
     }
 
+    // 關閉生態側邊面板
     function closePanel() { sidePanel.classList.remove("show"); }
 
     window.onclick = function(event) { 
