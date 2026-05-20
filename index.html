@@ -778,22 +778,30 @@
     function openMap() { mapModal.style.display = "block"; }
     function closeMap() { mapModal.style.display = "none"; closePanel(); }
 
-    function submitJoinForm(event) {
+    async function submitJoinForm(event) {
         event.preventDefault();
     
-        const data = {
-            name: document.getElementById("name").value,
-            type: document.getElementById("type").value,
-            message: document.getElementById("message").value
-        };
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwInvLl91kEhnSVnKlJhEiFvgGmzoI3hVWugHLU7kZFrQKbWb6hx6LP_Ezxjng41bLR/exec";
     
-        console.log(data);
+        const data = new URLSearchParams();
+        data.append("name", document.getElementById("name").value);
+        data.append("type", document.getElementById("type").value);
+        data.append("message", document.getElementById("message").value);
     
-        alert("感謝您的回饋，我們已收到資料！");
+        try {
+            await fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                body: data
+            });
     
-        event.target.reset();
-    
-        showPage('home');
+            alert("感謝您的回饋，我們已收到資料！");
+            event.target.reset();
+            showPage("home");
+        } catch (error) {
+            alert("送出失敗，請稍後再試。");
+            console.error(error);
+        }
     }
     function showResource(title, text) {
         document.getElementById("resource-title").textContent = title;
