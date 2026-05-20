@@ -53,9 +53,11 @@
         }
         .left { flex: 2; position: relative; }
         .left img { width: 100%; border-radius: 10px; opacity: 0.9; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        
+        /* 修改：將 bottom 從 30px 改成 80px，讓字串往上放一點 */
         .text-overlay {
             position: absolute;
-            bottom: 30px;
+            bottom: 80px;
             left: 30px;
             font-size: 26px;
             font-weight: bold;
@@ -76,17 +78,17 @@
         .map-box:hover { background: #6e9f6e; transform: translateY(-5px); }
         .map-box img { width: 80%; border-radius: 5px; margin-top: 10px; }
 
-        /* 新增：讓動物與植物箱子左右並排的橫向容器 */
+        /* 動植物箱子左右並排的橫向容器 */
         .lists-container {
             display: flex;
             gap: 15px;
         }
 
-        /* 修改：把圓角設定成頂部大圓角（還原預設稿的拱門設計） */
+        /* 修改：將 border-radius 改成 40px，讓上下都是對稱的完美圓弧狀 */
         .box { 
             flex: 1;
-            padding: 25px 15px; 
-            border-radius: 60px 60px 0 0; 
+            padding: 30px 15px; 
+            border-radius: 40px; 
             transition: 0.3s; 
             text-align: center;
         }
@@ -102,7 +104,7 @@
             padding-bottom: 8px; 
         }
 
-        /* 新增：直列清單樣式 */
+        /* 直列清單樣式 */
         .species-list {
             list-style: none;
             padding: 0;
@@ -111,11 +113,13 @@
             flex-direction: column;
             gap: 14px;
         }
+        
+        /* 修改：將 font-size 從 16px 放大到 20px，讓動植物名稱更大更清晰 */
         .species-list li {
             cursor: pointer;
             padding: 6px 8px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 20px; 
             font-weight: bold;
             letter-spacing: 1px;
             transition: 0.2s ease-in-out;
@@ -162,7 +166,6 @@
             padding: 0 20px;
         }
 
-        /* 新增按鈕卡片樣式 */
         .resource-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -412,7 +415,7 @@
                 <p>探索校園動植物分布</p>
                 <img src="map.png" alt="Map Preview">
             </div>
-
+            
             <div class="lists-container">
                 <div class="box animal">
                     <h3>動物</h3>
@@ -669,6 +672,7 @@
             threats: `<ul>
                 <li><strong>棲地破碎化：</strong> 都市開發導致低海拔森林棲地減少，影響其築巢與覓食範圍</li>
                 <li><strong>人為干擾：</strong> 育雛期間因護巢行為較強，常與人類產生衝突導致巢位受破壞</li>
+                <li><strong>環境藥劑：</strong> 校園周邊若過度使用除草劑或農藥，可能透過食物鏈影響其健康</li>
             </ul>`,
             conservation: `<ul>
                 <li><strong>棲地保護：</strong> 維護校園森林與大型樹木的完整性，提供安全的築巢環境</li>
@@ -831,9 +835,7 @@
 
     async function submitJoinForm(event) {
         event.preventDefault();
-    
         const scriptURL = "https://script.google.com/macros/s/AKfycbwInvLl91kEhnSVnKlJhEiFvgGmzoI3hVWugHLU7kZFrQKbWb6hx6LP_Ezxjng41bLR/exec";
-    
         const data = new URLSearchParams();
         data.append("name", document.getElementById("name").value);
         data.append("type", document.getElementById("type").value);
