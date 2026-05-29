@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Species Data
  * ============
  * Single source of truth for all species displayed on the website.
@@ -32,7 +32,7 @@ const animals = {
     squirrel: {
         name: '赤腹松鼠',
         category: 'animal',
-        avatar: 'images/animal1.jpg',
+        avatar: 'images/赤腹松鼠.jpg',
         scientific: 'Callosciurus erythraeus',
         classification: '哺乳綱 Mammalia／囓齒目 Rodentia／松鼠科 Sciuridae／麗松鼠屬 Callosciurus',
         dist: `<ul>
@@ -53,7 +53,7 @@ const animals = {
     magpie: {
         name: '台灣藍鵲',
         category: 'animal',
-        avatar: 'images/animal2.jpg',
+        avatar: 'images/台灣藍鵲.jpg',
         scientific: 'Urocissa caerulea',
         classification: '鳥綱 Aves／雀形目 Passeriformes／鴉科 Corvidae',
         dist: `<ul>
@@ -74,7 +74,7 @@ const animals = {
     lizard: {
         name: '斯文豪氏攀蜥',
         category: 'animal',
-        avatar: 'images/animal4.jpg',
+        avatar: 'images/斯文豪氏攀蜥.jpg',
         scientific: 'Diploderma swinhonis',
         classification: '爬行綱 Reptilia／有鱗目 Squamata／飛蜥科 Agamidae',
         dist: `<ul>
@@ -95,7 +95,7 @@ const animals = {
     frog: {
         name: '澤蛙',
         category: 'animal',
-        avatar: 'images/animal3.jpg',
+        avatar: 'images/澤蛙.jpg',
         scientific: 'Fejervarya limnocharis',
         classification: '兩棲綱 Amphibia／無尾目 Anura／叉舌蛙科 Dicroglossidae',
         dist: `<ul>
@@ -116,7 +116,7 @@ const animals = {
     dragonfly: {
         name: '霜白蜻蜓',
         category: 'animal',
-        avatar: 'images/animal5.jpg',
+        avatar: 'images/霜白蜻蜓.jpg',
         scientific: 'Orthetrum pruinosum',
         classification: '昆蟲綱 Insecta／蜻蜓目 Odonata／蜻蜓科 Libellulidae',
         dist: `<ul>
@@ -145,7 +145,7 @@ const plants = {
     cedar: {
         name: '台灣肖楠',
         category: 'plant',
-        avatar: 'images/plant1.jpg',
+        avatar: 'images/台灣肖楠.jpg',
         scientific: 'Calocedrus formosana',
         classification: '松柏綱 Coniferopsida／松柏目 Pinales／柏科 Cupressaceae',
         dist: `<ul>
@@ -166,7 +166,7 @@ const plants = {
     juniper: {
         name: '龍柏',
         category: 'plant',
-        avatar: 'images/plant2.jpg',
+        avatar: 'images/龍柏.jpg',
         scientific: "Juniperus chinensis 'Kaizuka'",
         classification: '松柏綱 Coniferopsida／松柏目 Pinales／柏科 Cupressaceae',
         dist: `<ul>
@@ -186,7 +186,7 @@ const plants = {
     paperbark: {
         name: '白千層',
         category: 'plant',
-        avatar: 'images/plant3.jpg',
+        avatar: 'images/白千層.jpg',
         scientific: 'Melaleuca leucadendra',
         classification: '木蘭綱 Magnoliopsida／桃金孃目 Myrtales／桃金孃科 Myrtaceae',
         dist: `<ul>
@@ -205,7 +205,7 @@ const plants = {
     acacia: {
         name: '相思樹',
         category: 'plant',
-        avatar: 'images/plant4.jpg',
+        avatar: 'images/相思樹.jpg',
         scientific: 'Acacia confusa',
         classification: '木蘭綱 Magnoliopsida／豆目 Fabales／豆科 Fabaceae',
         dist: `<ul>
@@ -225,7 +225,7 @@ const plants = {
     cherry: {
         name: '櫻花',
         category: 'plant',
-        avatar: 'images/plant5.jpg',
+        avatar: 'images/山櫻花.jpg',
         scientific: 'Prunus spp.',
         classification: '木蘭綱 Magnoliopsida／薔薇目 Rosales／薔薇科 Rosaceae',
         dist: `<ul>
