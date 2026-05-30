@@ -240,9 +240,23 @@
         var pills = document.querySelectorAll('.pe-season-nav__pill');
         if (!pills.length) return;
 
+        // Extract section IDs from href="#section-*" attributes
+        // and resolve them locally — avoids <base href="../"> misrouting fragments
         var sections = Array.from(pills).map(function (pill) {
-            var href = pill.getAttribute('href');
-            return href ? document.querySelector(href) : null;
+            var href = pill.getAttribute('href') || '';
+            var id = href.replace(/^.*#/, '');
+            return id ? document.getElementById(id) : null;
+        });
+
+        // Intercept click: prevent default navigation, scroll to section instead
+        pills.forEach(function (pill, i) {
+            pill.addEventListener('click', function (e) {
+                e.preventDefault();
+                var target = sections[i];
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
 
         function updateActive() {
