@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <title>植物詳情 — 校園植物探索</title>
+    <meta name="description" content="深入認識中央大學校園植物的生態故事與觀察技巧。">
+
+    <!-- Fonts: Playfair Display (NatGeo serif) + Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,500;1,700&family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/plant-detail.css">
+</head>
+<body>
+
+    <!-- ===== Loading Overlay ===== -->
+    <div class="pd-loading" id="pdLoading" aria-live="polite" role="status">
+        <div class="pd-loading__icon">🌿</div>
+        <div class="pd-loading__text">Loading Plant Profile…</div>
+        <div class="pd-loading__bar"><div class="pd-loading__bar-fill"></div></div>
+    </div>
+
+    <!-- ===== Top Navigation ===== -->
+    <nav class="pd-topnav" id="pdTopNav" aria-label="頁面導覽">
+        <a href="pages/plants.html" class="pd-topnav__back" aria-label="返回植物圖鑑">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            Plant Explorer
+        </a>
+        <span class="pd-topnav__name" id="pdTopName" aria-live="polite"></span>
+        <span class="pd-topnav__collection" id="pdTopCollection"></span>
+    </nav>
+
+    <!-- ===== Side Section Navigation Dots ===== -->
+    <nav class="pd-sidenav" id="pdSideNav" aria-label="章節導覽"></nav>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 1 — HERO BANNER
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-hero" id="pd-s1" aria-label="植物簡介">
+
+        <!-- Background photo (set by JS) -->
+        <div class="pd-hero__bg" id="pdHeroBg" role="img" aria-label="植物照片背景"></div>
+        <div class="pd-hero__overlay"></div>
+        <div class="pd-hero__vignette"></div>
+
+        <!-- Botanical line decoration -->
+        <div class="pd-hero__botanicals" aria-hidden="true">
+            <svg class="pd-hero__deco pd-hero__deco--tl" viewBox="0 0 180 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M90 270 C90 270 15 200 20 120 C25 40 65 10 90 8 C115 10 155 40 160 120 C165 200 90 270 90 270Z" fill="currentColor"/>
+                <line x1="90" y1="270" x2="90" y2="8" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                <path d="M90 80 C68 72 44 86 36 112" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+                <path d="M90 120 C112 113 136 127 144 153" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+                <path d="M90 165 C70 157 50 170 42 194" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            </svg>
+            <svg class="pd-hero__deco pd-hero__deco--br" viewBox="0 0 140 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70 210 C70 210 10 160 14 95 C18 30 48 8 70 6 C92 8 122 30 126 95 C130 160 70 210 70 210Z" fill="currentColor"/>
+                <line x1="70" y1="210" x2="70" y2="6" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            </svg>
+        </div>
+
+        <!-- Content -->
+        <div class="pd-hero__content">
+            <div class="pd-hero__meta">
+                <span class="pd-hero__eyebrow">CAMPUS PLANT EXPLORER · 國立中央大學</span>
+            </div>
+            <div class="pd-hero__collection-badge" id="pdCollectionBadge" aria-label="所屬收藏"></div>
+            <p class="pd-hero__character" id="pdCharacter"></p>
+            <h1 class="pd-hero__name" id="pdName"></h1>
+            <div class="pd-hero__tags" id="pdHeroTags" role="list" aria-label="植物標籤"></div>
+        </div>
+
+        <div class="pd-hero__scroll-hint" aria-hidden="true">
+            <span>Scroll to Explore</span>
+            <div class="pd-scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 1b — PHOTO GALLERY
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-gallery" id="pd-gallery" aria-label="植物相簿" hidden>
+        <div class="pd-gallery__label">
+            <span class="pd-gallery__eyebrow">FIELD PHOTOGRAPHS · 實地紀錄</span>
+        </div>
+
+        <!-- Desktop: editorial layout -->
+        <div class="pd-gallery__editorial" id="pdGalleryEditorial" aria-label="相簿圖片">
+            <button class="pd-gallery__cell pd-gallery__cell--primary" id="pdGalleryPrimary"
+                    data-index="0" aria-label="查看第一張照片">
+                <div class="pd-gallery__img-wrap">
+                    <img id="pdGalleryImg0" alt="" loading="lazy" decoding="async">
+                    <div class="pd-gallery__caption" id="pdGalleryCap0"></div>
+                    <div class="pd-gallery__zoom-icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                    </div>
+                </div>
+            </button>
+
+            <div class="pd-gallery__supporting" id="pdGallerySupporting">
+                <button class="pd-gallery__cell pd-gallery__cell--secondary" id="pdGalleryCell1"
+                        data-index="1" aria-label="查看第二張照片">
+                    <div class="pd-gallery__img-wrap">
+                        <img id="pdGalleryImg1" alt="" loading="lazy" decoding="async">
+                        <div class="pd-gallery__zoom-icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                        </div>
+                    </div>
+                </button>
+                <button class="pd-gallery__cell pd-gallery__cell--secondary" id="pdGalleryCell2"
+                        data-index="2" aria-label="查看第三張照片">
+                    <div class="pd-gallery__img-wrap">
+                        <img id="pdGalleryImg2" alt="" loading="lazy" decoding="async">
+                        <div class="pd-gallery__zoom-icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile: swipeable strip -->
+        <div class="pd-gallery__strip-wrap" id="pdGalleryStrip" aria-label="滑動查看更多照片">
+            <div class="pd-gallery__strip" id="pdGalleryStripInner" role="list"></div>
+            <div class="pd-gallery__dots" id="pdGalleryDots" aria-label="目前圖片位置" role="tablist"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         LIGHTBOX
+         ═══════════════════════════════════════════════ -->
+    <div class="pd-lightbox" id="pdLightbox" role="dialog" aria-modal="true"
+         aria-label="照片檢視" hidden>
+        <div class="pd-lightbox__backdrop" id="pdLightboxBackdrop"></div>
+        <div class="pd-lightbox__stage">
+            <img class="pd-lightbox__img" id="pdLightboxImg" alt="" decoding="async">
+            <div class="pd-lightbox__caption" id="pdLightboxCaption"></div>
+            <div class="pd-lightbox__counter" id="pdLightboxCounter"></div>
+        </div>
+        <button class="pd-lightbox__nav pd-lightbox__nav--prev" id="pdLbPrev" aria-label="上一張">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="pd-lightbox__nav pd-lightbox__nav--next" id="pdLbNext" aria-label="下一張">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <button class="pd-lightbox__close" id="pdLbClose" aria-label="關閉">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 2 — BLOOM SNAPSHOT
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--cream" id="pd-s2" aria-labelledby="pd-s2-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label">🌿 BLOOM SNAPSHOT · 植物概覽</div>
+            <h2 class="pd-section-title" id="pd-s2-title">快速認識這株植物</h2>
+            <div class="pd-stats-grid" id="pdStatsGrid" role="list"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 3 — DISCOVERY CLUES
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s" id="pd-s3" aria-labelledby="pd-s3-title">
+        <div class="pd-inner pd-mag-split">
+            <!-- text left -->
+            <div class="pd-mag-split__content">
+                <div class="pd-chapter-label">👀 DISCOVERY CLUES · 辨識線索</div>
+                <h2 class="pd-section-title" id="pd-s3-title">如何辨識這株植物</h2>
+                <p class="pd-section-intro" id="pdCluesIntro"></p>
+                <div class="pd-clues-grid" id="pdCluesGrid" role="list"></div>
+            </div>
+            <!-- image right (photo 2) -->
+            <div class="pd-mag-split__photo" id="pdMagPhoto2" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 4 — THE STORY
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--parchment" id="pd-s4" aria-labelledby="pd-s4-title">
+        <div class="pd-inner pd-inner--narrow">
+            <div class="pd-chapter-label" id="pdStoryLabel">📖 THE STORY · 植物的故事</div>
+            <h2 class="pd-section-title" id="pd-s4-title">這株植物的故事</h2>
+            <div class="pd-story-body" id="pdStoryBody"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 5 — VIEWING CALENDAR
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--white" id="pd-s5" aria-labelledby="pd-s5-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label" id="pdCalLabel">📅 VIEWING CALENDAR · 觀賞時曆</div>
+            <h2 class="pd-section-title" id="pd-s5-title">最佳觀賞月份</h2>
+            <div class="pd-calendar-container">
+                <div class="pd-calendar-chart" id="pdCalChart" role="img" aria-label="觀賞月份長條圖"></div>
+                <div class="pd-calendar-legend" aria-hidden="true">
+                    <div class="pd-cal-legend">
+                        <span class="pd-cal-swatch pd-cal-swatch--hi"></span><span>最佳觀賞</span>
+                    </div>
+                    <div class="pd-cal-legend">
+                        <span class="pd-cal-swatch pd-cal-swatch--mid"></span><span>適合觀賞</span>
+                    </div>
+                    <div class="pd-cal-legend">
+                        <span class="pd-cal-swatch pd-cal-swatch--lo"></span><span>一般</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 6 — BEST VIEWING SPOTS
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--greentint" id="pd-s6" aria-labelledby="pd-s6-title">
+        <div class="pd-inner pd-mag-split pd-mag-split--img-left">
+            <!-- image left (photo 3) -->
+            <div class="pd-mag-split__photo" id="pdMagPhoto3" aria-hidden="true"></div>
+            <!-- text right -->
+            <div class="pd-mag-split__content">
+                <div class="pd-chapter-label">📍 BEST VIEWING SPOTS · 校園熱點</div>
+                <h2 class="pd-section-title" id="pd-s6-title">校園最佳觀賞地點</h2>
+                <div class="pd-spots-grid" id="pdSpotsGrid" role="list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 7 — PLANT PASSPORT
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--cream" id="pd-s7" aria-labelledby="pd-s7-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label">🌱 PLANT PASSPORT · 植物身份證</div>
+            <h2 class="pd-section-title" id="pd-s7-title">植物基本資料</h2>
+            <div class="pd-passport-wrap">
+                <div class="pd-passport-card" id="pdPassport" role="table" aria-label="植物資料表"></div>
+                <div class="pd-passport-emblem" aria-hidden="true">
+                    <div class="pd-passport-emblem__ring">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                            <circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1"/>
+                            <text x="40" y="36" text-anchor="middle" fill="currentColor" font-size="14">🌿</text>
+                            <text x="40" y="52" text-anchor="middle" fill="currentColor" font-size="5.5" font-family="Georgia" letter-spacing="1">CAMPUS PLANT</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 8 — CHALLENGES
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--amber" id="pd-s8" aria-labelledby="pd-s8-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label">⚠️ CHALLENGES · 面臨威脅</div>
+            <h2 class="pd-section-title" id="pd-s8-title">這株植物面臨哪些挑戰</h2>
+            <div class="pd-challenges-grid" id="pdChallengesGrid" role="list"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 9 — HOW CAN WE HELP
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--action" id="pd-s9" aria-labelledby="pd-s9-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label">💚 HOW CAN WE HELP · 我們能做什麼</div>
+            <h2 class="pd-section-title" id="pd-s9-title">保護這株植物，從你我開始</h2>
+            <div class="pd-actions-grid" id="pdActionsGrid" role="list"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 10 — CONTINUE EXPLORING
+         ═══════════════════════════════════════════════ -->
+    <section class="pd-s pd-s--dark" id="pd-s10" aria-labelledby="pd-s10-title">
+        <div class="pd-inner">
+            <div class="pd-chapter-label pd-chapter-label--light">🌿 CONTINUE EXPLORING · 繼續探索</div>
+            <h2 class="pd-section-title pd-section-title--light" id="pd-s10-title">探索更多校園植物</h2>
+            <div class="pd-related-grid" id="pdRelatedGrid" role="list"></div>
+            <div class="pd-explore-cta">
+                <a href="pages/plants.html" class="pd-explore-btn">← 返回植物圖鑑</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="pd-footer">
+        <div class="pd-footer__inner">
+            <span class="pd-footer__text">🌿 NCU Campus Plant Explorer · 國立中央大學校園植物圖鑑</span>
+            <a href="pages/plants.html" class="pd-footer__link">返回圖鑑 →</a>
+        </div>
+    </footer>
+
+    <script src="js/plant-images.js"></script>
+    <script src="js/plant-detail.js"></script>
+</body>
+</html>

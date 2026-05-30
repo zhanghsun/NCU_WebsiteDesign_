@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <title>校園植物探索 — 國立中央大學</title>
+    <meta name="description" content="探索國立中央大學校園的樹木、花卉與綠色夥伴，認識四季的校園植物生態">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/plants.css">
+</head>
+<body>
+
+    <!-- ===== Floating Leaf Canvas ===== -->
+    <div class="pe-leaves-canvas" aria-hidden="true" id="peLeafCanvas"></div>
+
+    <!-- ===== Navigation ===== -->
+    <nav class="pe-nav">
+        <a href="index.html" class="pe-nav__back" aria-label="返回首頁">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            返回
+        </a>
+        <span class="pe-nav__title">🌿 校園植物圖鑑</span>
+        <div class="pe-nav__badge">10 種植物</div>
+    </nav>
+
+    <!-- ===== Hero ===== -->
+    <header class="pe-hero" aria-label="Campus Plant Explorer">
+
+        <!-- Background pattern overlay -->
+        <div class="pe-hero__bg-pattern" aria-hidden="true"></div>
+
+        <!-- Dappled light bokeh -->
+        <div class="pe-hero__bokeh" aria-hidden="true">
+            <span class="pe-bokeh pe-bokeh--1"></span>
+            <span class="pe-bokeh pe-bokeh--2"></span>
+            <span class="pe-bokeh pe-bokeh--3"></span>
+            <span class="pe-bokeh pe-bokeh--4"></span>
+            <span class="pe-bokeh pe-bokeh--5"></span>
+        </div>
+
+        <!-- Decorative large botanical leaves -->
+        <div class="pe-hero__deco-leaves" aria-hidden="true">
+            <!-- Top-left leaf -->
+            <svg class="pe-deco-leaf pe-deco-leaf--tl" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 290 C100 290 10 210 18 125 C26 40 78 12 100 8 C122 12 174 40 182 125 C190 210 100 290 100 290Z" fill="currentColor"/>
+                <line x1="100" y1="290" x2="100" y2="8" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <path d="M100 90 C74 82 46 98 36 128" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <path d="M100 130 C126 122 154 138 164 168" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <path d="M100 170 C76 162 52 178 44 205" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <path d="M100 210 C122 204 144 218 152 242" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            </svg>
+
+            <!-- Top-right leaf -->
+            <svg class="pe-deco-leaf pe-deco-leaf--tr" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 290 C100 290 10 210 18 125 C26 40 78 12 100 8 C122 12 174 40 182 125 C190 210 100 290 100 290Z" fill="currentColor"/>
+                <line x1="100" y1="290" x2="100" y2="8" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+            </svg>
+
+            <!-- Bottom-right leaf -->
+            <svg class="pe-deco-leaf pe-deco-leaf--br" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 290 C100 290 10 210 18 125 C26 40 78 12 100 8 C122 12 174 40 182 125 C190 210 100 290 100 290Z" fill="currentColor"/>
+                <line x1="100" y1="290" x2="100" y2="8" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            </svg>
+
+            <!-- Bottom-left leaf -->
+            <svg class="pe-deco-leaf pe-deco-leaf--bl" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 290 C100 290 10 210 18 125 C26 40 78 12 100 8 C122 12 174 40 182 125 C190 210 100 290 100 290Z" fill="currentColor"/>
+                <line x1="100" y1="290" x2="100" y2="8" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+            </svg>
+        </div>
+
+        <!-- Main content -->
+        <div class="pe-hero__content">
+            <p class="pe-hero__eyebrow">National Central University · 國立中央大學</p>
+
+            <h1 class="pe-hero__title">
+                <span class="pe-hero__title-emoji" aria-hidden="true">🌿</span>
+                Campus Plant Explorer
+            </h1>
+
+            <p class="pe-hero__subtitle">
+                Discover the trees, flowers, and green companions that shape every season at National Central University.
+            </p>
+
+            <div class="pe-hero__stats" role="list" aria-label="統計資訊">
+                <div class="pe-hero__stat" role="listitem">
+                    <span class="pe-hero__stat-num">10</span>
+                    <span class="pe-hero__stat-label">植物種類</span>
+                </div>
+                <div class="pe-hero__stat-divider" aria-hidden="true"></div>
+                <div class="pe-hero__stat" role="listitem">
+                    <span class="pe-hero__stat-num">4</span>
+                    <span class="pe-hero__stat-label">探索主題</span>
+                </div>
+                <div class="pe-hero__stat-divider" aria-hidden="true"></div>
+                <div class="pe-hero__stat" role="listitem">
+                    <span class="pe-hero__stat-num">全年</span>
+                    <span class="pe-hero__stat-label">四季景觀</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seasonal mood quote -->
+        <p class="pe-hero__quote" aria-hidden="true">每一株植物，都是校園四季的詩</p>
+
+        <!-- Scroll hint -->
+        <div class="pe-hero__scroll-hint" aria-hidden="true">
+            <span>開始探索</span>
+            <div class="pe-hero__scroll-arrow"></div>
+        </div>
+
+    </header>
+
+    <!-- ===== Seasonal Jump Navigation ===== -->
+    <nav class="pe-season-nav" aria-label="季節分類導航">
+        <div class="pe-season-nav__inner">
+            <a href="#section-spring"   class="pe-season-nav__pill pe-season-nav__pill--spring">
+                <span class="pe-season-nav__icon" aria-hidden="true">🌸</span>
+                <span>Spring</span>
+                <span class="pe-season-nav__sub">春日盛放</span>
+            </a>
+            <a href="#section-seasonal" class="pe-season-nav__pill pe-season-nav__pill--seasonal">
+                <span class="pe-season-nav__icon" aria-hidden="true">🍂</span>
+                <span>Seasonal</span>
+                <span class="pe-season-nav__sub">四季交替</span>
+            </a>
+            <a href="#section-landmarks" class="pe-season-nav__pill pe-season-nav__pill--landmarks">
+                <span class="pe-season-nav__icon" aria-hidden="true">🌳</span>
+                <span>Landmarks</span>
+                <span class="pe-season-nav__sub">校園地標</span>
+            </a>
+            <a href="#section-evergreen" class="pe-season-nav__pill pe-season-nav__pill--evergreen">
+                <span class="pe-season-nav__icon" aria-hidden="true">🌿</span>
+                <span>Evergreen</span>
+                <span class="pe-season-nav__sub">常綠守護</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="pe-main" id="peMain">
+
+        <!-- 🌸 1. SPRING COLLECTION 🌸 -->
+        <section id="section-spring" class="pe-collection pe-collection--spring" data-collection="spring"
+                 aria-label="Spring Collection — 春日植物">
+            <div class="pe-collection__header">
+                <div class="pe-collection__icon" aria-hidden="true">🌸</div>
+                <div>
+                    <h2 class="pe-collection__title">Spring Collection</h2>
+                    <p class="pe-collection__subtitle">春日初綻盛放 · 粉色花雨與雪白花束</p>
+                </div>
+                <div class="pe-collection__count">2 種植物</div>
+            </div>
+
+            <div class="pe-cards-grid" id="grid-spring" role="list">
+
+                <!-- 櫻花 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="櫻花">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌸</span>
+                            <span class="pe-card__placeholder-name">Cherry Blossom</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌸 Spring Collection</span>
+                            <span class="pe-card__rarity" aria-label="常見度 4/5">★★★★☆ <em>Frequent</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌸</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🌸</span>
+                            Spring Messenger
+                        </div>
+                        <h3 class="pe-card__name">櫻花</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">觀賞植物</span>
+                            <span class="pe-card__tag">校園熱門</span>
+                            <span class="pe-card__tag">外來栽培種</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            最佳觀賞季 1～3月
+                        </div>
+                        <a href="pages/plant-detail.html?plant=櫻花" class="pe-card__cta" aria-label="探索櫻花詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 白千層 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="白千層">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🤍</span>
+                            <span class="pe-card__placeholder-name">Paperbark Tree</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌸 Spring Collection</span>
+                            <span class="pe-card__rarity" aria-label="常見度 4/5">★★★★☆ <em>Frequent</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌸</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🤍</span>
+                            Snow Brush Tree
+                        </div>
+                        <h3 class="pe-card__name">白千層</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">景觀植物</span>
+                            <span class="pe-card__tag">濕地植物</span>
+                            <span class="pe-card__tag">外來種</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：春末至夏季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=白千層" class="pe-card__cta" aria-label="探索白千層詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 🍂 2. SEASONAL COLORS 🍂 -->
+        <section id="section-seasonal" class="pe-collection pe-collection--seasonal" data-collection="seasonal"
+                 aria-label="Seasonal Colors — 四季彩色植物">
+            <div class="pe-collection__header">
+                <div class="pe-collection__icon" aria-hidden="true">🍂</div>
+                <div>
+                    <h2 class="pe-collection__title">Seasonal Colors</h2>
+                    <p class="pe-collection__subtitle">四季輪替色彩詩篇 · 紅橙交替與常綠相映</p>
+                </div>
+                <div class="pe-collection__count">2 種植物</div>
+            </div>
+
+            <div class="pe-cards-grid" id="grid-seasonal" role="list">
+
+                <!-- 木棉 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="木棉">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌺</span>
+                            <span class="pe-card__placeholder-name">Kapok Tree</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🍂 Seasonal Colors</span>
+                            <span class="pe-card__rarity" aria-label="常見度 4/5">★★★★☆ <em>Frequent</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🍂</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🔥</span>
+                            Fire Tree
+                        </div>
+                        <h3 class="pe-card__name">木棉</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">觀賞植物</span>
+                            <span class="pe-card__tag">行道樹</span>
+                            <span class="pe-card__tag">熱帶植物</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：春季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=木棉" class="pe-card__cta" aria-label="探索木棉詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 小葉欖仁 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="小葉欖仁">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌿</span>
+                            <span class="pe-card__placeholder-name">Madagascar Almond</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🍂 Seasonal Colors</span>
+                            <span class="pe-card__rarity" aria-label="常見度 5/5">★★★★★ <em>Common</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🍂</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">☂️</span>
+                            Green Umbrella
+                        </div>
+                        <h3 class="pe-card__name">小葉欖仁</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">景觀植物</span>
+                            <span class="pe-card__tag">行道樹</span>
+                            <span class="pe-card__tag">熱帶植物</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            觀賞季節：全年
+                        </div>
+                        <a href="pages/plant-detail.html?plant=小葉欖仁" class="pe-card__cta" aria-label="探索小葉欖仁詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 🌳 3. CAMPUS LANDMARKS 🌳 -->
+        <section id="section-landmarks" class="pe-collection pe-collection--landmarks" data-collection="landmarks"
+                 aria-label="Campus Landmarks — 校園地標植物">
+            <div class="pe-collection__header">
+                <div class="pe-collection__icon" aria-hidden="true">🌳</div>
+                <div>
+                    <h2 class="pe-collection__title">Campus Landmarks</h2>
+                    <p class="pe-collection__subtitle">見證時光歲月的老樹 · 樹蔭庇護日月長</p>
+                </div>
+                <div class="pe-collection__count">3 種植物</div>
+            </div>
+
+            <div class="pe-cards-grid" id="grid-landmarks" role="list">
+
+                <!-- 榕樹 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="榕樹">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌳</span>
+                            <span class="pe-card__placeholder-name">Banyan Tree</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌳 Campus Landmarks</span>
+                            <span class="pe-card__rarity" aria-label="常見度 5/5">★★★★★ <em>Common</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌳</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🌳</span>
+                            Campus Guardian
+                        </div>
+                        <h3 class="pe-card__name">榕樹</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">台灣常見植物</span>
+                            <span class="pe-card__tag">大型樹木</span>
+                            <span class="pe-card__tag">生態植物</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            觀賞季節：全年
+                        </div>
+                        <a href="pages/plant-detail.html?plant=榕樹" class="pe-card__cta" aria-label="探索榕樹詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 樟樹 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="樟樹">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌲</span>
+                            <span class="pe-card__placeholder-name">Camphor Tree</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌳 Campus Landmarks</span>
+                            <span class="pe-card__rarity" aria-label="常見度 5/5">★★★★★ <em>Common</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌳</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🌲</span>
+                            Ancient Storyteller
+                        </div>
+                        <h3 class="pe-card__name">樟樹</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">台灣原生種</span>
+                            <span class="pe-card__tag">常綠常見植物</span>
+                            <span class="pe-card__tag">大型喬木</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：春季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=樟樹" class="pe-card__cta" aria-label="探索樟樹詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 黑板樹 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="黑板樹">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌿</span>
+                            <span class="pe-card__placeholder-name">Devil Tree</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌳 Campus Landmarks</span>
+                            <span class="pe-card__rarity" aria-label="常見度 5/5">★★★★★ <em>Common</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌳</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🏢</span>
+                            Towering Giant
+                        </div>
+                        <h3 class="pe-card__name">黑板樹</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">校園常見</span>
+                            <span class="pe-card__tag">行道樹</span>
+                            <span class="pe-card__tag">外來栽培種</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：秋季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=黑板樹" class="pe-card__cta" aria-label="探索黑板樹詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 🌿 4. NATIVE & EVERGREEN 🌿 -->
+        <section id="section-evergreen" class="pe-collection pe-collection--evergreen" data-collection="evergreen"
+                 aria-label="Native &amp; Evergreen — 常綠植物">
+            <div class="pe-collection__header">
+                <div class="pe-collection__icon" aria-hidden="true">🌿</div>
+                <div>
+                    <h2 class="pe-collection__title">Native &amp; Evergreen</h2>
+                    <p class="pe-collection__subtitle">四季常綠的校園守護 · 台灣原生種的傳承</p>
+                </div>
+                <div class="pe-collection__count">3 種植物</div>
+            </div>
+
+            <div class="pe-cards-grid" id="grid-evergreen" role="list">
+
+                <!-- 台灣肖楠 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="台灣肖楠">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌿</span>
+                            <span class="pe-card__placeholder-name">Taiwan Incense Cedar</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌿 Native &amp; Evergreen</span>
+                            <span class="pe-card__rarity" aria-label="常見度 3/5">★★★☆☆ <em>Occasional</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌿</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">💚</span>
+                            Native Treasure
+                        </div>
+                        <h3 class="pe-card__name">台灣肖楠</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">台灣原生種</span>
+                            <span class="pe-card__tag">常綠喬木</span>
+                            <span class="pe-card__tag">珍貴樹種</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：春季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=台灣肖楠" class="pe-card__cta" aria-label="探索台灣肖楠詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 龍柏 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="龍柏">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌲</span>
+                            <span class="pe-card__placeholder-name">Chinese Juniper</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌿 Native &amp; Evergreen</span>
+                            <span class="pe-card__rarity" aria-label="常見度 4/5">★★★★☆ <em>Frequent</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌿</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🌀</span>
+                            Spiral Guardian
+                        </div>
+                        <h3 class="pe-card__name">龍柏</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">常綠喬木</span>
+                            <span class="pe-card__tag">景觀植物</span>
+                            <span class="pe-card__tag">修剪造型</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            觀賞季節：全年
+                        </div>
+                        <a href="pages/plant-detail.html?plant=龍柏" class="pe-card__cta" aria-label="探索龍柏詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+                <!-- 相思樹 -->
+                <article class="pe-card" role="listitem" tabindex="0">
+                    <div class="pe-card__photo" data-plant="相思樹">
+                        <div class="pe-card__photo-placeholder" aria-hidden="true">
+                            <span class="pe-card__placeholder-emoji">🌼</span>
+                            <span class="pe-card__placeholder-name">Taiwan Acacia</span>
+                        </div>
+                        <div class="pe-card__photo-overlay">
+                            <span class="pe-card__collection-badge">🌿 Native &amp; Evergreen</span>
+                            <span class="pe-card__rarity" aria-label="常見度 4/5">★★★★☆ <em>Frequent</em></span>
+                        </div>
+                        <div class="pe-card__leaf-icon" aria-hidden="true">🌿</div>
+                    </div>
+                    <div class="pe-card__body">
+                        <div class="pe-card__character-badge">
+                            <span class="pe-card__character-emoji" aria-hidden="true">🌼</span>
+                            Golden Rain Tree
+                        </div>
+                        <h3 class="pe-card__name">相思樹</h3>
+                        <div class="pe-card__tags" aria-label="標籤">
+                            <span class="pe-card__tag">台灣原生種</span>
+                            <span class="pe-card__tag">生態植物</span>
+                            <span class="pe-card__tag">蜜源植物</span>
+                        </div>
+                        <div class="pe-card__bloom">
+                            <span class="pe-card__bloom-dot" aria-hidden="true"></span>
+                            花期：春季
+                        </div>
+                        <a href="pages/plant-detail.html?plant=相思樹" class="pe-card__cta" aria-label="探索相思樹詳情">
+                            Explore <i class="pe-card__cta-arrow" aria-hidden="true">→</i>
+                        </a>
+                    </div>
+                    <div class="pe-card__hover-leaves" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="pe-footer">
+        <div class="pe-footer__inner">
+            <p class="pe-footer__text">🌿 NCU Campus Plant Explorer &nbsp;·&nbsp; 國立中央大學校園植物圖鑑</p>
+            <a href="index.html" class="pe-footer__back">← 返回首頁</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/plant-images.js"></script>
+    <script src="js/plants.js"></script>
+
+</body>
+</html>
